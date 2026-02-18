@@ -2,13 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:fragment="head">
+        <title>TechShop</title>
+        <meta charset="UTF-8"/>
 
-    <head th:replace="~{general/fragmentos :: head}"></head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
+        <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
+
+        <!-- WebJars -->
+        <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/webjars/font-awesome/6.5.1/css/all.min.css}" rel="stylesheet"/>
+
+        <!-- JS propio -->
+        <script th:src="@{/js/rutinas.js}"></script>
+
+        <!-- jQuery (si lo ocupas) -->
+        <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+
+        <!-- Bootstrap bundle (incluye Popper) -->
+        <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+    </head>
 
     <body>
         <header th:replace="~{general/fragmentos :: header}"></header>
 
+        <main class="container py-4">
+            [[#{carrito.titulo}]]
+        </main>
         
-        <footer th:replace="~{general/fragmentos :: footer}"></footer>
+        <section th:replace="~{consultas/fragmentos :: tabs}"/>
+        <section th:replace="~{consultas/fragmentos :: tarjetas}"/>
+        
+        <footer th:replace="~{general/fragmentos :: footer}"/>
     </body>
 </html>

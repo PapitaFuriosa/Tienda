@@ -1,8 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: bisque;
     font-family: serif;
 }
 
+/* ================================
+   HEADER
+================================ */
 header {
     position: fixed;
     background-color: #6666FF;
@@ -11,42 +20,61 @@ header {
     width: 100%;
     height: 90px;
     padding: 10px;
+    z-index: 1000;
 }
 
+/* ================================
+   MENÚ LATERAL (ASIDE)
+================================ */
 aside {
-    position: fixed;  
+    position: fixed;
     background-color: #99FF99;
     top: 110px;
     left: 0;
     width: 20%;
     bottom: 20px;
     padding: 10px;
+    z-index: 500;
 }
-section {
-    position: fixed;  
+
+/* ================================
+   CONTENIDO PRINCIPAL
+   ⚠️ IMPORTANTE: NO usar section global
+================================ */
+main.contenido {
+    position: relative;
     background-color: #dd8295;
-    top: 110px;
-    left: 20%;
+    margin-top: 110px;
+    margin-left: 20%;
     width: 80%;
-    bottom: 20px;
-    padding: 10px;
-    overflow-y: scroll;
+    min-height: calc(100vh - 130px);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1;
 }
+
+/* ================================
+   FOOTER
+================================ */
 footer {
-    position: fixed;  
+    position: fixed;
     background-color: black;
-    color: white;    
+    color: white;
     left: 0;
     width: 100%;
     height: 20px;
     bottom: 0;
     text-align: center;
+    z-index: 1000;
 }
 
+/* ================================
+   NAVBAR
+================================ */
 nav {
-   display: flex;
-   justify-content: space-between;
-   margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
 }
 
 .logo {
@@ -83,6 +111,54 @@ nav {
     background-color: black;
 }
 
+/* ================================
+   TABLAS / FORMULARIOS
+================================ */
+table {
+    background: white;
+    border-radius: 10px;
+    width: 100%;
+}
 
+input, select, textarea {
+    border-radius: 6px;
+    padding: 6px;
+}
 
+button {
+    border-radius: 6px;
+}
 
+/* ================================
+   FIX MODALES BOOTSTRAP (100% funcional)
+================================ */
+
+/* Modal siempre arriba */
+.modal {
+    z-index: 20000 !important;
+}
+
+/* fondo oscuro */
+.modal-backdrop {
+    z-index: 19999 !important;
+    pointer-events: none !important;
+}
+
+/* permitir escribir y hacer click dentro */
+.modal,
+.modal * {
+    pointer-events: auto !important;
+}
+
+/* evitar que header/aside tapen el modal */
+header, aside, main.contenido, footer {
+    z-index: 1 !important;
+}
+contenido > section{
+  position: static !important;
+  margin: 0 !important;
+  width: auto !important;
+  min-height: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
