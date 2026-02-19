@@ -43,6 +43,6 @@ public class IndexController {
         }
         var categorias = categoriaService.getCategorias(true);
         model.addAttribute("categorias", categorias);
-        return "/index";
+        return "index";
     }
 }
