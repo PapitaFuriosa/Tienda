@@ -41,7 +41,7 @@ public class ProductoController {
         model.addAttribute("producto", new Producto());
         model.addAttribute("totalProductos", productos.size());
 
-        return "/producto/listado";
+        return "producto/listado";
     }
 
     @PostMapping("/guardar")
@@ -113,6 +113,6 @@ public class ProductoController {
         model.addAttribute("producto", productoOpt.get());
         model.addAttribute("categorias", categorias);
 
-        return "/producto/modifica";
+        return "producto/modifica";
     }
 }
