@@ -258,8 +258,8 @@
 
                                 <div class="mb-3">
                                     <label>[[#{producto.imagen}]]</label>
-                                    <input class="form-control" type="file" name="imagenFile"
-                                           onchange="mostrarImagen(this);"/>
+                                     <input type="file" name="imagenFile" onchange="mostrarImagen(this);" class="form-control" required />
+
                                     <img id="blah" th:src="@{${producto.rutaImagen}}" alt="imagen" height="200"/>
                                 </div>
 

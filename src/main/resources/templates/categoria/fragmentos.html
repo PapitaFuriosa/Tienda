@@ -5,7 +5,7 @@
     <head 
         th:replace="~{general/plantilla :: head}"
         <title>Tienda</title> 
-    </head>>
+    </head>
 
     <body>
         <!-- fragmento 1 para Agregar categoria en ventana modal -->
@@ -40,7 +40,8 @@
                                     <input type="checkbox" name='activo' class='form-check-input'/></div>
                                 <div class='mb-3'>
                                     <label>[[#{categoria.imagen}]]</label>
-                                    <input type="file" name='imagenFile' onchange='mostrarImagen(this);'
+                                    <input type="file" name="imagenFile" class="form-control" required />
+
                                            class='form-control'/>
                                     <img id='blah' src='#' alt='imagen de categoría' height="200"/></div>
                             </div>
