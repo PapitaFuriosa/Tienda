@@ -13,8 +13,9 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-//prueba212321
+
 @Configuration
+
 public class ProjectConfig implements WebMvcConfigurer {
 
     
@@ -84,5 +85,3 @@ public class ProjectConfig implements WebMvcConfigurer {
         return ms;
     }
 }
-
-//Byron estuvo aquí 
