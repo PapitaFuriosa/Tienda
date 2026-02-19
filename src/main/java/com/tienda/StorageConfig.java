@@ -22,7 +22,7 @@ public class StorageConfig
     
     @Bean
     public Storage storage() throws IOException {
-        ClassPathResource resource = new ClassPathResource(jsonPath + File.separator + jsonFile);
+        ClassPathResource resource =  new ClassPathResource(jsonPath + "/" + jsonFile);
         try (InputStream inputStream = resource.getInputStream())
         {
             GoogleCredentials credencials = GoogleCredentials.fromStream(inputStream);
