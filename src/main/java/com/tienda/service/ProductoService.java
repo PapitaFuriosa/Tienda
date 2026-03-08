@@ -5,7 +5,6 @@ import com.tienda.repository.ProductoRepository;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,74 +13,81 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ProductoService {
 
-    @Autowired
-    private ProductoRepository categoriaRepository;
+    private final ProductoRepository productoRepository;
+    private final FirebaseStorageService firebaseStorageService;
+
+    public ProductoService(ProductoRepository productoRepository,
+                           FirebaseStorageService firebaseStorageService) {
+        this.productoRepository = productoRepository;
+        this.firebaseStorageService = firebaseStorageService;
+    }
 
     @Transactional(readOnly = true)
-    public List<Producto> getProductos(boolean activo) 
-    {
-        if (activo) 
-        {
-            return categoriaRepository.findByActivoTrue();
+    public List<Producto> getProductos(boolean activo) {
+        if (activo) {
+            return productoRepository.findByActivoTrue();
         }
-        return categoriaRepository.findAll();
+        return productoRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public Optional<Producto> getProducto(Integer idProducto) 
-    {
-        return categoriaRepository.findById(idProducto);
+    public Optional<Producto> getProducto(Integer idProducto) {
+        return productoRepository.findById(idProducto);
     }
-
-    @Autowired
-    private FirebaseStorageService firebaseStorageService;
 
     @Transactional
-    public void save(Producto categoria, MultipartFile imagenFile) 
-    {
-        categoriaRepository.save(categoria);
+    public void save(Producto producto, MultipartFile imagenFile) {
+        productoRepository.save(producto);
 
-        if (!imagenFile.isEmpty()) 
-        { // Si no está vacío... pasaron una imagen...
-            try 
-            {
+        if (!imagenFile.isEmpty()) {
+            try {
                 String rutaImagen = firebaseStorageService.uploadImage(
                         imagenFile,
-                        "categoria",
-                        categoria.getIdProducto()
+                        "producto",              // <- yo pondría "producto" (antes tenías "categoria")
+                        producto.getIdProducto()
                 );
 
-                categoria.setRutaImagen(rutaImagen);
-                categoriaRepository.save(categoria);
+                producto.setRutaImagen(rutaImagen);
+                productoRepository.save(producto);
 
-            } catch (IOException e) 
-            {
-                
+            } catch (IOException e) {
+                // ideal: loggear o relanzar
             }
         }
     }
 
     @Transactional
     public void delete(Integer idProducto) {
-
-        // Verifica si la categoría existe antes de intentar eliminarlo
-        if (!categoriaRepository.existsById(idProducto)) 
-        {
-            // Lanza una excepción para indicar que el usuario no fue encontrado
+        if (!productoRepository.existsById(idProducto)) {
             throw new IllegalArgumentException(
-                    "La categoria con ID " + idProducto + " no existe."
+                    "El producto con ID " + idProducto + " no existe."
             );
         }
 
-        try 
-        {
-            categoriaRepository.deleteById(idProducto);
-        } catch (DataIntegrityViolationException e) 
-        {
-            // Lanza una nueva excepción para encapsular el problema de integridad de datos
+        try {
+            productoRepository.deleteById(idProducto);
+        } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException(
-                    "No se puede eliminar la categoria. Tiene datos asociados.", e
+                    "No se puede eliminar el producto. Tiene datos asociados.", e
             );
         }
+    }
+
+    // ===== CONSULTAS =====
+
+    @Transactional(readOnly = true)
+    public List<Producto> consultaDerivada(double precioInf, double precioSup) {
+        return productoRepository.findByPrecioBetweenOrderByPrecioAsc(precioInf, precioSup);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Producto> consultaJPQL(double precioInf, double precioSup) {
+        return productoRepository.consultaJPQL(precioInf, precioSup);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Producto> consultaSQL(double precioInf, double precioSup) {
+        // OJO: si tu repo se llama consultasSQL (plural), dejalo así:
+        return productoRepository.consultaSQL(precioInf, precioSup);
     }
 }

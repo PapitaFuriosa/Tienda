@@ -7,55 +7,45 @@
 body {
     background-color: bisque;
     font-family: serif;
+    padding-top: 100px; 
 }
 
-/* ================================
-   HEADER
-================================ */
+
 header {
     position: fixed;
     background-color: #6666FF;
     top: 0;
     left: 0;
     width: 100%;
-    height: 90px;
-    padding: 10px;
+    height: 70px;
+    padding: 5px 10px;
     z-index: 1000;
 }
 
-/* ================================
-   MENÚ LATERAL (ASIDE)
-================================ */
+
 aside {
     position: fixed;
     background-color: #99FF99;
-    top: 110px;
+    top: 90px; /* justo debajo del header */
     left: 0;
     width: 20%;
-    bottom: 20px;
+    bottom: 20px; /* espacio para footer */
     padding: 10px;
     z-index: 500;
 }
 
-/* ================================
-   CONTENIDO PRINCIPAL
-   ⚠️ IMPORTANTE: NO usar section global
-================================ */
+
 main.contenido {
     position: relative;
     background-color: #dd8295;
-    margin-top: 110px;
-    margin-left: 20%;
+    margin-left: 20%; /* deja espacio al aside */
     width: 80%;
-    min-height: calc(100vh - 130px);
+    min-height: calc(100vh - 110px);
     padding: 20px;
     overflow-y: auto;
-    z-index: 1;
 }
 
-/* ================================
-   FOOTER
-================================ */
+
 footer {
     position: fixed;
     background-color: black;
@@ -68,9 +58,7 @@ footer {
     z-index: 1000;
 }
 
-/* ================================
-   NAVBAR
-================================ */
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -81,7 +69,7 @@ nav {
     font-size: 30px;
     font-weight: bold;
     font-family: cursive;
-    line-height: 90px;
+    line-height: 70px;
 }
 
 .nav-link {
@@ -98,7 +86,7 @@ nav {
 .nav-menu-item {
     font-size: 22px;
     margin: 0 10px;
-    line-height: 90px;
+    line-height: 70px;
 }
 
 .menu-item {
@@ -111,9 +99,7 @@ nav {
     background-color: black;
 }
 
-/* ================================
-   TABLAS / FORMULARIOS
-================================ */
+
 table {
     background: white;
     border-radius: 10px;
@@ -129,36 +115,11 @@ button {
     border-radius: 6px;
 }
 
-/* ================================
-   FIX MODALES BOOTSTRAP (100% funcional)
-================================ */
 
-/* Modal siempre arriba */
 .modal {
     z-index: 20000 !important;
 }
 
-/* fondo oscuro */
 .modal-backdrop {
     z-index: 19999 !important;
-    pointer-events: none !important;
-}
-
-/* permitir escribir y hacer click dentro */
-.modal,
-.modal * {
-    pointer-events: auto !important;
-}
-
-/* evitar que header/aside tapen el modal */
-header, aside, main.contenido, footer {
-    z-index: 1 !important;
-}
-contenido > section{
-  position: static !important;
-  margin: 0 !important;
-  width: auto !important;
-  min-height: auto !important;
-  background: transparent !important;
-  padding: 0 !important;
 }
