@@ -26,10 +26,10 @@ header {
 aside {
     position: fixed;
     background-color: #99FF99;
-    top: 90px; /* justo debajo del header */
+    top: 90px; 
     left: 0;
     width: 20%;
-    bottom: 20px; /* espacio para footer */
+    bottom: 20px; 
     padding: 10px;
     z-index: 500;
 }
@@ -38,7 +38,7 @@ aside {
 main.contenido {
     position: relative;
     background-color: #dd8295;
-    margin-left: 20%; /* deja espacio al aside */
+    margin-left: 20%; 
     width: 80%;
     min-height: calc(100vh - 110px);
     padding: 20px;

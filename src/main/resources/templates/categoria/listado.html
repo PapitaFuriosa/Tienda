@@ -6,18 +6,18 @@
         <title>Techshop</title>
     </head>
 
-<body>
-    <header th:replace="~{general/fragmentos :: header}"></header>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"></header>
 
-    <main class="contenido">
+        <main class="contenido">
 
-        <section th:replace="~{categoria/fragmentos :: agregar}"></section>
-        <section th:replace="~{categoria/fragmentos :: listado}"></section>
-        <section th:replace="~{categoria/fragmentos :: confirmarEliminar}"></section>
-        <section th:replace="~{general/fragmentos :: mostrarToast}"></section>
+            <section th:replace="~{categoria/fragmentos :: agregar}"></section>
+            <section th:replace="~{categoria/fragmentos :: listado}"></section>
+            <section th:replace="~{categoria/fragmentos :: confirmarEliminar}"></section>
+            <section th:replace="~{general/fragmentos :: mostrarToast}"></section>
 
-    </main>
+        </main>
 
-    <footer th:replace="~{general/fragmentos :: footer}"></footer>
-</body>
+        <footer th:replace="~{general/fragmentos :: footer}"></footer>
+    </body>
 </html>

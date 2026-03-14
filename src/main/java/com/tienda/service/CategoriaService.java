@@ -18,18 +18,15 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Transactional(readOnly = true)
-    public List<Categoria> getCategorias(boolean activo) 
-    {
-        if (activo) 
-        {
+    public List<Categoria> getCategorias(boolean activo) {
+        if (activo) {
             return categoriaRepository.findByActivoTrue();
         }
         return categoriaRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public Optional<Categoria> getCategoria(Integer idCategoria) 
-    {
+    public Optional<Categoria> getCategoria(Integer idCategoria) {
         return categoriaRepository.findById(idCategoria);
     }
 
@@ -37,14 +34,11 @@ public class CategoriaService {
     private FirebaseStorageService firebaseStorageService;
 
     @Transactional
-    public void save(Categoria categoria, MultipartFile imagenFile) 
-    {
+    public void save(Categoria categoria, MultipartFile imagenFile) {
         categoriaRepository.save(categoria);
 
-        if (!imagenFile.isEmpty()) 
-        { // Si no está vacío... pasaron una imagen...
-            try 
-            {
+        if (!imagenFile.isEmpty()) {
+            try {
                 String rutaImagen = firebaseStorageService.uploadImage(
                         imagenFile,
                         "categoria",
@@ -54,9 +48,8 @@ public class CategoriaService {
                 categoria.setRutaImagen(rutaImagen);
                 categoriaRepository.save(categoria);
 
-            } catch (IOException e) 
-            {
-                
+            } catch (IOException e) {
+
             }
         }
     }
@@ -64,21 +57,15 @@ public class CategoriaService {
     @Transactional
     public void delete(Integer idCategoria) {
 
-        // Verifica si la categoría existe antes de intentar eliminarlo
-        if (!categoriaRepository.existsById(idCategoria)) 
-        {
-            // Lanza una excepción para indicar que el usuario no fue encontrado
+        if (!categoriaRepository.existsById(idCategoria)) {
             throw new IllegalArgumentException(
                     "La categoria con ID " + idCategoria + " no existe."
             );
         }
 
-        try 
-        {
+        try {
             categoriaRepository.deleteById(idCategoria);
-        } catch (DataIntegrityViolationException e) 
-        {
-            // Lanza una nueva excepción para encapsular el problema de integridad de datos
+        } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException(
                     "No se puede eliminar la categoria. Tiene datos asociados.", e
             );

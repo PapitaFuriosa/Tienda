@@ -17,7 +17,7 @@ public class ProductoService {
     private final FirebaseStorageService firebaseStorageService;
 
     public ProductoService(ProductoRepository productoRepository,
-                           FirebaseStorageService firebaseStorageService) {
+            FirebaseStorageService firebaseStorageService) {
         this.productoRepository = productoRepository;
         this.firebaseStorageService = firebaseStorageService;
     }
@@ -43,7 +43,7 @@ public class ProductoService {
             try {
                 String rutaImagen = firebaseStorageService.uploadImage(
                         imagenFile,
-                        "producto",              // <- yo pondría "producto" (antes tenías "categoria")
+                        "producto",
                         producto.getIdProducto()
                 );
 
@@ -51,7 +51,6 @@ public class ProductoService {
                 productoRepository.save(producto);
 
             } catch (IOException e) {
-                // ideal: loggear o relanzar
             }
         }
     }
@@ -73,8 +72,6 @@ public class ProductoService {
         }
     }
 
-    // ===== CONSULTAS =====
-
     @Transactional(readOnly = true)
     public List<Producto> consultaDerivada(double precioInf, double precioSup) {
         return productoRepository.findByPrecioBetweenOrderByPrecioAsc(precioInf, precioSup);
@@ -87,7 +84,12 @@ public class ProductoService {
 
     @Transactional(readOnly = true)
     public List<Producto> consultaSQL(double precioInf, double precioSup) {
-        // OJO: si tu repo se llama consultasSQL (plural), dejalo así:
         return productoRepository.consultaSQL(precioInf, precioSup);
     }
+
+    @Transactional(readOnly = true)
+    public List<Producto> buscarPorDescripcion(String texto) {
+        return productoRepository.buscarPorDescripcion(texto);
+    }
+
 }

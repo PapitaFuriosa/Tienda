@@ -8,9 +8,7 @@
     </head>
 
     <body>
-        <!-- fragmento 1 para Agregar categoria en ventana modal -->
         <section th:fragment="agregar">
-            <!-- Button trigger modal -->
             <div class='row py-4 mb-2 bg-light'>
                 <div class='col-md-1'></div>
                 <div class='col-md-3'>
@@ -19,7 +17,6 @@
                         <i class="fa-solid fa-plus"></i> [[#{categoria.agregar}]]</button>
                 </div>
             </div>
-            <!-- Modal -->
             <div class="modal fade" id="agregarCategoriaModal"  tabindex="-1" 
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -42,7 +39,7 @@
                                     <label>[[#{categoria.imagen}]]</label>
                                     <input type="file" name="imagenFile" class="form-control" required />
 
-                                           class='form-control'/>
+                                    class='form-control'/>
                                     <img id='blah' src='#' alt='imagen de categoría' height="200"/></div>
                             </div>
                             <div class="modal-footer">
@@ -57,7 +54,6 @@
             </div>
         </section>
 
-        <!-- fragmento 2 para el listado de categorias -->
         <section th:fragment="listado" class="p-3">
             <div class="row p-3">
                 <div class="col-md-9">
@@ -70,7 +66,7 @@
                                             <th>[[#{categoria.descripcion}]]</th>
                                             <th>[[#{categoria.imagen}]]</th>
                                             <th>[[#{categoria.activo}]]</th>
-                                            <th></th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -79,7 +75,7 @@
                                             <td>[[${c.descripcion}]]</td>
                                             <td><img th:src="@{${c.rutaImagen}}" alt="noData" height="75"/></td>
                                             <td th:text="${c.activo} ? 'Activa':'Inactiva'"></td>
-                                            <td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">
                                                 <button type="button" class="btn btn-danger"
                                                         data-bs-toggle="modal" data-bs-target="#confirmModal"
                                                         th:data-bs-id="${c.idCategoria}"
@@ -107,7 +103,6 @@
             </div>
         </section>
 
-        <!-- 3 Fragmento que se utiliza en la página modifca.html -->
         <section th:fragment="editar">
             <div class="row">
                 <div class="col-md-2"></div>
@@ -156,7 +151,6 @@
             </div>
         </section>
 
-        <!-- 4 fragmento que se utiliza para confirmar que se desea eliminar una categoria -->
         <section th:fragment="confirmarEliminar">
             <div class="modal fade" 
                  id="confirmModal" 
