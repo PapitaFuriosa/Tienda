@@ -90,7 +90,9 @@
 
                             <li class="nav-item my-auto" sec:authorize="isAuthenticated()">
                                 <a class="nav-link">
-                                    <i class="fas fa-user"></i>
+                                    <img th:src="@{${session.imagenUsuario}}"
+                                         alt="your image" height="40" class="round-circle"></img>
+                                    
                                     <span sec:authentication="name" class="ms-1"></span>
                                 </a>
                             </li>
