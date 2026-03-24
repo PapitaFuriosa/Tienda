@@ -1,6 +1,7 @@
 package com.tienda.controller;
 
-import com.tienda.domain.Categoria;
+import com.tienda.domain.Producto;
+import com.tienda.service.ProductoService;
 import com.tienda.service.CategoriaService;
 import jakarta.validation.Valid;
 import java.util.Locale;
@@ -18,100 +19,100 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/producto")
+public class ProductoController {
+
+    @Autowired
+    private ProductoService productoService;
 
     @Autowired
     private CategoriaService categoriaService;
 
-    @GetMapping("/listado")
-    public String inicio(Model model) {
-        var categorias = categoriaService.getCategorias(false);
-        model.addAttribute("categorias", categorias);
-        model.addAttribute("totalCategorias", categorias.size());
-        return "categoria/listado";
-    }
-
     @Autowired
     private MessageSource messageSource;
 
+    @GetMapping("/listado")
+    public String inicio(Model model) {
+        var productos = productoService.getProductos(false);
+        var categorias = categoriaService.getCategorias(false);
+
+        model.addAttribute("productos", productos);
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("producto", new Producto());
+        model.addAttribute("totalProductos", productos.size());
+
+        return "producto/listado";
+    }
+
     @PostMapping("/guardar")
     public String guardar(
-            @Valid Categoria categoria,
-            @RequestParam MultipartFile imagenFile,
+            @Valid Producto producto,
+            @RequestParam("imagenFile") MultipartFile imagenFile,
             RedirectAttributes redirectAttributes) {
 
-        categoriaService.save(categoria, imagenFile);
+        productoService.save(producto, imagenFile);
 
         redirectAttributes.addFlashAttribute(
                 "todoOk",
-                messageSource.getMessage(
-                        "mensaje.actualizado",
-                        null,
-                        Locale.getDefault()
-                )
+                messageSource.getMessage("mensaje.actualizado", null, Locale.getDefault())
         );
 
-        return "redirect:/categoria/listado";
+        return "redirect:/producto/listado";
     }
 
     @PostMapping("/eliminar")
     public String eliminar(
-            @RequestParam Integer idCategoria,
+            @RequestParam Integer idProducto,
             RedirectAttributes redirectAttributes) {
 
         String titulo = "todoOk";
         String detalle = "mensaje.eliminado";
 
         try {
-            categoriaService.delete(idCategoria);
+            productoService.delete(idProducto);
 
         } catch (IllegalArgumentException e) {
             titulo = "error";
-            detalle = "categoria.error01";
+            detalle = "producto.error01";
 
         } catch (IllegalStateException e) {
             titulo = "error";
-            detalle = "categoria.error02";
+            detalle = "producto.error02";
 
         } catch (Exception e) {
             titulo = "error";
-            detalle = "categoria.error03";
+            detalle = "producto.error03";
         }
 
         redirectAttributes.addFlashAttribute(
                 titulo,
-                messageSource.getMessage(
-                        detalle,
-                        null,
-                        Locale.getDefault()
-                )
+                messageSource.getMessage(detalle, null, Locale.getDefault())
         );
 
-        return "redirect:/categoria/listado";
+        return "redirect:/producto/listado";
     }
 
-    @GetMapping("/modificar/{idCategoria}")
+    @GetMapping("/modificar/{idProducto}")
     public String modificar(
-            @PathVariable("idCategoria") Integer idCategoria,
+            @PathVariable("idProducto") Integer idProducto,
             Model model,
             RedirectAttributes redirectAttributes) {
 
-        Optional<Categoria> categoriaOpt = categoriaService.getCategoria(idCategoria);
+        Optional<Producto> productoOpt = productoService.getProducto(idProducto);
 
-        if (categoriaOpt.isEmpty()) {
+        if (productoOpt.isEmpty()) {
             redirectAttributes.addFlashAttribute(
                     "error",
-                    messageSource.getMessage(
-                            "categoria.error01",
-                            null,
-                            Locale.getDefault()
-                    )
+                    messageSource.getMessage("producto.error01", null, Locale.getDefault())
             );
-            return "redirect:/categoria/listado";
+            return "redirect:/producto/listado";
         }
 
-        model.addAttribute("categoria", categoriaOpt.get());
-        return "categoria/modifica";
+        var categorias = categoriaService.getCategorias(false);
+
+        model.addAttribute("producto", productoOpt.get());
+        model.addAttribute("categorias", categorias);
+
+        return "producto/modifica";
     }
 }
