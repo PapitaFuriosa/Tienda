@@ -72,7 +72,8 @@
                                        name="idProducto"
                                        th:value="${p.idProducto}">
 
-                                    <button class="btn btn-sm btn-primary"
+                                    <button type ="button"
+                                            class="btn btn-sm btn-primary"
                                             type="submit"
                                             th:disabled="${p.existencias == 0}"
                                             onclick="addCart(this.form)">
