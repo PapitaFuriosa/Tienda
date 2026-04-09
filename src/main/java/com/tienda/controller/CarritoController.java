@@ -184,3 +184,4 @@ public class CarritoController {
         return "/carrito/verFactura"; // Nombre del archivo Thymeleaf
     }
 }
+

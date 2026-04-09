@@ -39,3 +39,5 @@ public class Factura implements Serializable {
     @OneToMany(mappedBy = "factura", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Venta> ventas;
 }
+
+

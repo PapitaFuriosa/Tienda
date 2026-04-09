@@ -37,3 +37,4 @@ public class Venta implements Serializable {
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
 }
+

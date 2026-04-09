@@ -14,6 +14,7 @@ import lombok.Data;
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
@@ -21,7 +22,7 @@ public class Usuario implements Serializable {
     @NotBlank
     @Column(unique = true, length = 30)
     private String username;
-    @Column(length = 512)
+    @Column(length = 512)    
     private String password;
     @Column(length = 20)
     @NotBlank
@@ -45,6 +46,5 @@ public class Usuario implements Serializable {
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_rol")
     )
-
-    private Set<Rol> roles = new HashSet<>();
+    private Set<Rol> roles= new HashSet<>();
 }

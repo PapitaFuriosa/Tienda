@@ -15,3 +15,4 @@ public interface FacturaRepository extends JpaRepository<Factura, Integer>{
            "WHERE f.idFactura = :idFactura")
     Optional<Factura> findByIdFacturaConDetalle(@Param("idFactura") Integer idFactura);
 }
+

@@ -24,3 +24,5 @@ public class Item implements Serializable {
         return producto.getPrecio().multiply(new BigDecimal(cantidad));
     }
 }
+
+
