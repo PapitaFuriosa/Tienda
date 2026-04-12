@@ -32,7 +32,6 @@ public class IntexController {
         model.addAttribute("idCategoriaActual", idCategoria);
         var categoriaOptional = categoriaService.getCategoria(idCategoria);
         if (categoriaOptional.isEmpty()) {
-            //Puede ser que no se exista la categoria buscada...
             model.addAttribute("productos", java.util.Collections.emptyList());
         } else {
             var categoria = categoriaOptional.get();
@@ -44,4 +43,8 @@ public class IntexController {
         return "/index";
     }
 
+    @GetMapping("/acceso_denegado")
+    public String accesoDenegado() {
+        return "acceso_denegado";
+    }
 }

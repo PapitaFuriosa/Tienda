@@ -2,24 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <head th:fragment="head">
-        <title>TechShop</title>
-        <meta charset="UTF-8"/>
 
-        <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
-        <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
-
-        <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet"/>
-        <link th:href="@{/webjars/font-awesome/6.5.1/css/all.min.css}" rel="stylesheet"/>
-
-        <script th:src="@{/js/rutinas.js}"></script>
-
-        <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-
-        <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
-    </head>
+    <head th:replace="~{general/fragmentos :: head}"></head>
 
     <body>
         <header th:replace="~{general/fragmentos :: header}"></header>
@@ -28,9 +12,9 @@
             [[#{carrito.titulo}]]
         </main>
 
-        <section th:replace="~{consultas/fragmentos :: tabs}"/>
-        <section th:replace="~{consultas/fragmentos :: tarjetas}"/>
+        <section th:replace="~{consultas/fragmentos :: tabs}"></section>
+        <section th:replace="~{consultas/fragmentos :: tarjetas}"></section>
 
-        <footer th:replace="~{general/fragmentos :: footer}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"></footer>
     </body>
 </html>
